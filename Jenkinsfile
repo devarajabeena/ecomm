@@ -18,7 +18,8 @@ pipeline {
       }
       stage ('restart nginx'){
         steps{
-            sh 'sudo systemctl restart nginx'          
+            sh 'sudo systemctl restart nginx'  
+            echo 'deployment is completed'
         }
       }
     }  
