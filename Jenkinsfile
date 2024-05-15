@@ -1,6 +1,11 @@
 pipeline {
   agent any
     stages{
+      stage('slack-notification'){
+        steps{
+          slackSend channel: 'jenkins-notification', color: '439FE0', message: 'slackSend "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)', teamDomain: 'dl-muraliworkspace', tokenCredentialId: 'slack', username: 'jenkins'
+        }
+      }
       stage ('install nginx'){
         steps{
             sh 'sudo apt install nginx -y'          
