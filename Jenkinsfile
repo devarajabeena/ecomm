@@ -3,7 +3,12 @@ pipeline {
     stages{
       stage('slack-notification'){
         steps{
-          slackSend channel: 'jenkins-notification', color: '439FE0', message: 'slackSend "started ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>)', teamDomain: 'dl-muraliworkspace', tokenCredentialId: 'slack', username: 'jenkins'
+          slackSend channel: 'jenkins-notification', 
+                      color: '439FE0', 
+                    message: 'slackSend started ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>)', 
+                teamDomain: 'dl-muraliworkspace', 
+                tokenCredentialId: 'slack', 
+                  username: 'jenkins'
         }
       }
       stage ('install nginx'){
