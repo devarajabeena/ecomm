@@ -59,7 +59,7 @@ pipeline {
             sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
         }
       }
-        stage('Parallel Stages') {
+      stage('Parallel Stages') {
             parallel {
                 stage('Restart Nginx') {
                     steps {
@@ -73,9 +73,18 @@ pipeline {
                 stage('Hosting') {
                     steps {
                         script {
-                            def httpResponse = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://your-url-here", returnStdout: true).trim()
+                            def get_public_ip() {
+                                // Use curl to query ifconfig.co for the public IP address
+                                public_ip = sh(script: "curl -s https://api.ipify.org", returnStdout: true).trim()
+                                return public_ip
+                            }
+
+                            // Retrieve the public IP address using a web service
+                            def public_ip = get_public_ip()
+
+                            def httpResponse = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://${public_ip}", returnStdout: true).trim()
                             if (httpResponse != '200') {
-                                // If HTTP status code is not 200, repeat the hosting stage
+                                // If HTTP status code is not 200, retry the hosting stage
                                 echo "HTTP status code is not 200. Retrying hosting stage."
                                 retry(3) {
                                     sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'
