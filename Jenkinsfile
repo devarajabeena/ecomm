@@ -56,7 +56,7 @@ pipeline {
             stage('Check new script') {
                   steps {
                       script {
-                          def status_code=$(curl --write-out %{http_code} --silent --output /dev/null www.bbc.co.uk/news)
+                          def status_code = sh(curl --write-out %{http_code} --silent --output /dev/null www.bbc.co.uk/news)
                             if [[ "$status_code" -ne 200 ]] ; then
                               echo "Site status changed to $status_code"
                             else
