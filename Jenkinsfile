@@ -5,7 +5,11 @@ def get_public_ip() {
 }
 
 pipeline {
-  agent any
+  agent {
+      node{
+          label 'slave'
+      }
+  }
     stages{
       stage('slack-notification'){
         steps{
