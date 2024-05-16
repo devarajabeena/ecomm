@@ -1,3 +1,9 @@
+def get_public_ip() {
+    // Use curl to query ifconfig.co for the public IP address
+    public_ip = sh(script: "curl -s https://api.ipify.org", returnStdout: true).trim()
+    return public_ip
+}
+
 pipeline {
   agent any
     stages{
@@ -73,11 +79,6 @@ pipeline {
                 stage('Hosting') {
                     steps {
                         script {
-                            def get_public_ip() {
-                                // Use curl to query ifconfig.co for the public IP address
-                                public_ip = sh(script: "curl -s https://api.ipify.org", returnStdout: true).trim()
-                                return public_ip
-                            }
 
                             // Retrieve the public IP address using a web service
                             def public_ip = get_public_ip()
