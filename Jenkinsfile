@@ -43,7 +43,7 @@ pipeline {
               stage('Check Nginx Status') {
                   steps {
                       script {
-                          def response = sh(returnStatus: true, script: 'curl -Is http://www.nagarjunacrm.com | head -n 1 | cut -d" " -f2')
+                          def response = sh(returnStatus: true, script: 'curl -Is https://www.nagarjunacrm.com | head -n 1 | cut -d" " -f2')
                           if (response == '200') {
                               echo 'Nginx is running with status code 200. Proceeding with other stages.'
                           } else {
