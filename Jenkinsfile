@@ -66,7 +66,7 @@ pipeline {
       }
       stage ('hosting'){
         steps{
-            sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
+            sh 'sudo cp -rf /home/ubuntu/workspace/ecomm-app/* /var/www/html/'          
         }
       }
       stage('Parallel Stages') {
@@ -92,11 +92,11 @@ pipeline {
                                 // If HTTP status code is not 200, retry the hosting stage
                                 echo "HTTP status code is not 200. Retrying hosting stage."
                                 retry(3) {
-                                    sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'
+                                    sh 'sudo cp -rf /home/ubuntu/workspace/ecomm-app/* /var/www/html/'
                                 }
                             } else {
                                 // HTTP status code is 200, proceed with hosting
-                                sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'
+                                sh 'sudo cp -rf /home/ubuntu/workspace/ecomm-app/* /var/www/html/'
                             }
                         }
                     }
