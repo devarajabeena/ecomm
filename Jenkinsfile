@@ -59,11 +59,35 @@ pipeline {
             sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
         }
       }
-      stage ('restart nginx'){
-        steps{
-            sh 'sudo systemctl restart nginx'  
-            echo 'deployment is completed'
+        stage('Parallel Stages') {
+            parallel {
+                stage('Restart Nginx') {
+                    steps {
+                        script {
+                            // Restart Nginx
+                            sh 'sudo systemctl restart nginx'
+                            echo 'Deployment is completed'
+                        }
+                    }
+                }
+                stage('Hosting') {
+                    steps {
+                        script {
+                            def httpResponse = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://your-url-here", returnStdout: true).trim()
+                            if (httpResponse != '200') {
+                                // If HTTP status code is not 200, repeat the hosting stage
+                                echo "HTTP status code is not 200. Retrying hosting stage."
+                                retry(3) {
+                                    sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'
+                                }
+                            } else {
+                                // HTTP status code is 200, proceed with hosting
+                                sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     }  
 }
