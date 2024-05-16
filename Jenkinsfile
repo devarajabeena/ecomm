@@ -11,6 +11,20 @@ pipeline {
                   username: 'jenkins'
         }
       }
+      stage('Run Tests') {
+          parallel {
+              stage('Test On Windows') {
+                  steps {
+                      echo 'tests are completed on windows'
+                  }
+              }
+              stage('Test On Linux') {
+                  steps {
+                      echo 'tests are completed on Linux'
+                  }
+              }
+          }
+      }
       stage ('install nginx'){
         steps{
             sh 'sudo apt install nginx -y'          
