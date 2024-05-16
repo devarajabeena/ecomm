@@ -25,10 +25,29 @@ pipeline {
               }
           }
       }
-      stage ('install nginx'){
-        steps{
-            sh 'sudo apt install nginx -y'          
-        }
+      stage('Install and Check Nginx') {
+          parallel {
+              stage('Install Nginx') {
+                  steps {
+                      script {
+                          sh 'sudo apt install nginx -y'
+                      }
+                  }
+              }
+              stage('Check Nginx Status') {
+                  steps {
+                      script {
+                          def response = sh(returnStatus: true, script: 'curl -Is http://localhost | head -n 1 | cut -d" " -f2')
+                          if (response == '200') {
+                              echo 'Nginx is running with status code 200. Proceeding with other stages.'
+                          } else {
+                              echo 'Nginx is not running properly. Reinstalling...'
+                              sh 'sudo apt purge nginx -y && sudo apt install nginx -y'
+                          }
+                      }
+                  }
+              }
+          }
       }
       stage ('delete default page'){
         steps{
