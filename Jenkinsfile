@@ -13,5 +13,12 @@ pipeline{
         echo "nginx webpage removed"
       }
     }
+    stage('deploying ecomm app'){
+      steps{
+        sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-job/* /var/www/html/'
+        sh 'sudo systemctl restart nginx'
+        echo "copied files to nginx root directory"
+      }
+    }
   }
 }
