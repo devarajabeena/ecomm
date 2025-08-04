@@ -1,2 +1,2 @@
 # ecomm application
-echomn app
+echomn apps
