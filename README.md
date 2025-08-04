@@ -1,2 +1,2 @@
 # ecomm application
-- testing jenkins app
+- testing jenkins apps
