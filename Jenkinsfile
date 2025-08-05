@@ -1,22 +1,29 @@
 pipeline {
   agent any
     stages{
-      stage ('build'){
+      stage ('install nginx'){
         steps{
-            echo 'build complted'          
+            sh 'sudo apt install nginx -y'          
         }
       }
-      stage ('test'){
+      stage ('delete default page'){
         steps{
-            echo 'test completed'          
+            sh 'sudo rm -rf /var/www/html/*'          
         }
       }
-      stage ('location'){
+      stage ('hosting'){
         steps{
-            sh 'pwd'          
+            sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
         }
       }
-     
+      stage ('restart nginx'){
+        steps{
+            sh 'sudo systemctl restart nginx'  
+            echo 'deployment is completed'
+        }
+      }
     }  
 }
+
+
 
