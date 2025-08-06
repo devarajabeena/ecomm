@@ -1,6 +1,11 @@
  pipeline{
   agent any
   stages {
+     stage('notification') {
+        steps {
+            slackSend channel: 'new-channel', color: '#439FE0', message: 'Ecomm deployment job started', teamDomain: 'acmeco-wro7728', tokenCredentialId: 'slack'
+            }
+        } 
     stage ('web server') {
       steps {
         sh 'sudo apt install nginx -y'
@@ -54,5 +59,11 @@
           }
       }
     }
+    stage('email-notification') {
+       steps {
+           emailext body: 'ecomm applications deployed successfully into prod environment', subject: 'ecomm deployment', to: 'devarajabeena111@gmail.com' 
+            }
+            
+         }
   }
 }
