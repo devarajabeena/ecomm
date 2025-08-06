@@ -1,7 +1,7 @@
  pipeline{
   agent any
   stages {
-     stage('notification') {
+     stage('test-job') {
         steps {
             slackSend channel: 'new-channel', color: '#439FE0', message: 'Ecomm deployment job started', teamDomain: 'acmeco-wro7728', tokenCredentialId: 'slack'
             }
