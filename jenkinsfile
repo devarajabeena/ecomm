@@ -13,7 +13,7 @@ pipeline {
       }
       stage ('deploy'){
         steps{
-            sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
+            sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm/* /var/www/html/'          
         }
       }
       stage ('restart nginx'){
