@@ -1,26 +1,29 @@
 pipeline {
-    agent any
-    
-    stages {
-        stage('web servar') {
-            steps {
-	           
-                sh 'sudo apt install nginx -y'    
-            }
+  agent any
+    stages{
+      stage ('install nginx'){
+        steps{
+            sh 'sudo apt install nginx -y'          
         }
-        stage('Check Disk Space') {
-            steps {
-	           echo 'check disk details '
-                sh 'df -h'    
-            }
+      }
+      stage ('delete default page'){
+        steps{
+            sh 'sudo rm -rf /var/www/html/*'          
         }
-        stage('os details') {
-            steps {
-	           echo 'check os details '
-                sh 'cat /etc/os-release'    
-            }
+      }
+      stage ('hosting'){
+        steps{
+            sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
         }
-     }
-  }
+      }
+      stage ('restart nginx'){
+        steps{
+            sh 'sudo systemctl restart nginx'  
+            echo 'deployment is completed'
+        }
+      }
+    }  
+}
+
 
 
