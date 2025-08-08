@@ -1,7 +1,19 @@
  pipeline{
   agent any
   stages {
-    stage ('web server') {
+      stages {
+        stage('notification') {
+            steps {
+                slackSend channel: 'project-1', color: '#439FE0', message: 'ecomm deployment job started', teamDomain: 'acmo-co-talk', tokenCredentialId: 'slack'
+            }
+        }
+        stage('Email notification') {
+            steps {
+               emailext body: 'Testing Jenkins Pipeline Notification', subject: 'Testing Email Notification', to: 'devarajabeena111@gmail.com'
+        }
+    }
+  
+   stage ('web server') {
       steps {
         sh 'sudo apt install nginx -y'
       }
@@ -56,6 +68,9 @@
     }
   }
 }
+
+  
+           
 
 
 
