@@ -9,7 +9,7 @@
         }
         stage('Email notification') {
             steps {
-               emailext body: 'Testing Jenkins Pipeline Notification', subject: 'Testing Email Notification', to: 'devarajabeena111@gmail.com'
+               emailext body: 'ecomm application deployment succesfully', subject: 'Testing Email Notification', to: 'devarajabeena111@gmail.com'
         }
     }
   
