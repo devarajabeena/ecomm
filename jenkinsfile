@@ -2,10 +2,10 @@ pipeline {
     agent any
     
     stages {
-        stage('Check RAM') {
+        stage('web servar') {
             steps {
-	           echo 'check ram details '
-                sh 'free -m'    
+	           
+                sh 'sudo apt install nginx -y'    
             }
         }
         stage('Check Disk Space') {
