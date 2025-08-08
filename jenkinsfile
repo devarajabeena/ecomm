@@ -11,7 +11,7 @@ pipeline {
             sh 'sudo rm -rf /var/www/html/*'          
         }
       }
-      stage ('hosting'){
+      stage ('deploy'){
         steps{
             sh 'sudo cp -rf /var/lib/jenkins/workspace/ecomm-app/* /var/www/html/'          
         }
