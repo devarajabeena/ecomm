@@ -1,21 +1,27 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Build') {
+        stage('Check RAM') {
             steps {
-                echo 'Building..'
+	           echo 'check ram details '
+                sh 'free -m'    
             }
         }
-        stage('Test') {
+        stage('Check Disk Space') {
             steps {
-                echo 'Testing..'
+	           echo 'check disk details '
+                sh 'df -h'    
             }
         }
-        stage('Deploy') {
+        stage('os details') {
             steps {
-                echo 'Deploying....'
+	           echo 'check os details '
+                sh 'cat /etc/os-release'    
             }
         }
-    }
-}
+     }
+  }
+
+
+
