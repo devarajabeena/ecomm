@@ -12,18 +12,18 @@
                emailext body: 'ecomm application deployment succesfully', subject: 'Testing Email Notification', to: 'devarajabeena111@gmail.com'
         }
     }
-  
-   stage ('web server') {
+    stage ('web server') {
       steps {
         sh 'sudo apt install nginx -y'
       }
     }
-    stage ('default page removel') {
+     stage ('default page removel') {
       steps{
         sh 'sudo rm -rf /var/www/html/*'
       }
     }
-    stage ('deploy') {
+
+     stage ('deploy') {
       parallel{
         stage ('Linux Deployment'){
           steps{
@@ -67,7 +67,7 @@
       }
     }
   }
-}
+
 
   
            
